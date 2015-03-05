@@ -60,6 +60,7 @@ module Stamps
       property :Width,                   :from => :width
       property :Height,                  :from => :height
       property :ShipDate,                :from => :ship_date
+      property :DeliveryDate,            :from => :delivery_date
       property :InsuredValue,            :from => :insured_value
       property :RegisteredValue,         :from => :registration_value
       property :CODValue,                :from => :cod_value
@@ -84,13 +85,15 @@ module Stamps
       # Maps :rate to AddOns map
       def add_ons=(addons)
         self[:AddOns] = AddOnsArray.new(:add_on_v4 => addons[:add_on_v4],
-                                        :add_on_v5 => addons[:add_on_v5])
+                                        :add_on_v5 => addons[:add_on_v5],
+                                        :add_on_v6 => addons[:add_on_v6])
       end
     end
 
     class AddOnsArray < Hashie::Trash
       property :AddOnV4,     :from => :add_on_v4
       property :AddOnV5,     :from => :add_on_v5
+      property :AddOnV6,     :from => :add_on_v6
 
       def add_on_v4=(vals)
         return unless vals
@@ -100,6 +103,11 @@ module Stamps
       def add_on_v5=(vals)
         return unless vals
         self[:AddOnV5] = vals.map{ |value| AddOn.new(value).to_hash }
+      end
+
+      def add_on_v6=(vals)
+        return unless vals
+        self[:AddOnV6] = vals.map{ |value| AddOn.new(value).to_hash }
       end
     end
 
@@ -148,7 +156,7 @@ module Stamps
 
       # Maps :to to Address map
       def to=(val)
-        self[:To] = Address.new(val)
+        self[:To] = Address.new(val[:address])
       end
 
       # Maps :rate to Rate map
