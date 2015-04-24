@@ -43,6 +43,12 @@ module Stamps
         response[:errors].empty? ? response[:cancel_indicium_response] : response
       end
 
+      def scan!(params = {})
+        params[:authenticator] = authenticator_token unless params[:authenticator]
+        response = request('CreateScanForm', Stamps::Mapping::CreateScanForm.new(params))
+        response[:errors].empty? ? response[:create_scan_form_response] : response
+      end
+
       # Returns an array of tracking events
       #
       # @param [String] the transaction id of the stamp

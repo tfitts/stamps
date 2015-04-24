@@ -29,6 +29,13 @@ module Stamps
         response[:errors].empty? ? response[:get_purchase_status_response] : response
       end
 
+      def get_url(params = {})
+        params[:authenticator] = authenticator_token
+        params[:url_type] = 'AccountSettingsPage'
+        response = request('GetURL', Stamps::Mapping::GetUrl.new(params))
+        response[:errors].empty? ?  response[:get_url_response] : response
+      end
+
       # Request carrier pickup
       # TODO: Should this go somewhere else?
       #

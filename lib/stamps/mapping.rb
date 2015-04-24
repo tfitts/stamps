@@ -211,9 +211,9 @@ module Stamps
 
     class PurchasePostage < Hashie::Trash
       property :Authenticator,  :from => :authenticator
-      property :IntegratorTxID, :from => :transaction_id
       property :PurchaseAmount, :from => :amount
       property :ControlTotal,   :from => :control_total
+      property :IntegratorTxID, :from => :transaction_id
     end
 
     class GetPurchaseStatus < Hashie::Trash
@@ -286,6 +286,32 @@ module Stamps
       property :Authenticator, :from => :authenticator
       property :StampsTxID,    :from => :stamps_transaction_id
     end
+
+    class GetUrl < Hashie::Trash
+      property :Authenticator, :from => :authenticator
+      property :URLType, :from => :url_type
+      property :ApplicationContext, :from => :context
+    end
+
+    class CreateScanForm < Hashie::Trash
+      property :Authenticator,     :from => :authenticator
+      property :StampsTxIDs,       :from => :stamps_transaction_ids
+      property :FromAddress,       :from => :from_address
+      property :ImageType,         :from => :image_type
+      property :PrintInstructions, :from => :print_instructions
+
+      # Maps :from to Address map
+      def from_address=(val)
+        # Set the defult :from address from address
+        if Stamps.return_address
+          self[:FromAddress] = Address.new(Stamps.return_address.merge!(val))
+        else
+          self[:FromAddress] = Address.new(val)
+        end
+      end
+    end
+
+
 
   end
 end

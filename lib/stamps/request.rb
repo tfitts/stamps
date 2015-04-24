@@ -22,8 +22,12 @@ module Stamps
         globals.open_timeout self.open_timeout
         globals.read_timeout self.read_timeout
       end
-
       response = client.call(web_method, :message => params.to_hash)
+      if response.hash[:envelope][:body][:errors].present? || response.hash[:envelope][:body][:fault].present?
+        logger = Logger.new('log/stamps.log','weekly')
+        logger.warn(response.hash[:envelope][:body])
+        logger.close
+      end
 
       Stamps::Response.new(response).to_hash
     end
