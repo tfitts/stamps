@@ -202,7 +202,7 @@ module Stamps
     class CleanseAddress < Hashie::Trash
       property :Authenticator, :from => :authenticator
       property :Address,       :from => :address
-
+      property :FromZIPCode,   :from => :origin_zip
       # Maps :address to Address map
       def address=(val)
         self[:Address] = Address.new(val)
