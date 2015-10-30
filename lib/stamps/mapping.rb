@@ -257,18 +257,19 @@ module Stamps
       property :InvoiceNumber,     :from => :invoice_number
       property :OtherDescribe,     :from => :other_describe
       property :CustomsLines,      :from => :customs_lines
+      property :CustomsSigner,     :from => :customs_signer
 
       # Maps :customs CustomsLine map
       def customs_lines=(customs)
         # Important:  Must call to_hash to force re-ordering!
-        self[:CustomsLines] = customs.collect{ |val| CustomsLinesArray.new(val).to_hash }
+        self[:CustomsLines] = CustomsLinesArray.new(customs).to_hash
       end
     end
 
     class CustomsLinesArray < Hashie::Trash
       property :CustomsLine,     :from => :custom
       def custom=(val)
-        self[:CustomsLine] = CustomsLine.new(val).to_hash
+        self[:CustomsLine] = val.collect{|line| CustomsLine.new(line).to_hash }
       end
     end
 
