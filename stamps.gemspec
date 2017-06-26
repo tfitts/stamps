@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   # See: https://github.com/rubiii/savon/issues/301
   s.add_runtime_dependency('savon', '~> 2.11.0')
   s.add_runtime_dependency('httpi', '~> 2.3.0')
-  s.add_runtime_dependency('json', '~> 1.8')
+  s.add_runtime_dependency('json', '~> 2.0')
   s.add_runtime_dependency('multi_json', '~> 1.0')
   s.add_runtime_dependency('hashie', '~> 2.0')
 
