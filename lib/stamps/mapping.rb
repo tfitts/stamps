@@ -143,8 +143,8 @@ module Stamps
       property :printMemo,                            :from => :print_memo
       property :nonDeliveryOption,                    :from => :non_delivery_option
       property :ReturnImageData,                      :from => :return_image_data
-      property :PaperSize,                            :from => :paper_size
-      property :ExtendedPostageInfo,                  :from => :mws
+      # property :PaperSize,                            :from => :paper_size
+      # property :ExtendedPostageInfo,                  :from => :mws
 
       # Maps :from to Address map
       def from=(val)
@@ -171,9 +171,9 @@ module Stamps
         self[:Customs] = Customs.new(val)
       end
       
-      def mws=(val)
-        self[:ExtendedPostageInfo] = {'bridgeProfileType' => 'Amazon MWS'} if val
-      end
+      # def mws=(val)
+      #   self[:ExtendedPostageInfo] = {'bridgeProfileType' => 'Amazon MWS'} if val
+      # end
       
     end
 
